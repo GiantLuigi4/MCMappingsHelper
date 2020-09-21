@@ -28,15 +28,18 @@ public class MojmapHolder extends Holder {
 							tempC.addMethod(tempM);
 						String[] noNumberStrings = noSpaceString.split(":");
 						String[] strings = noNumberStrings[2].split("\\s");
-						String desc = parseFieldDescriptorFromString(strings[0]);
 						String[] methodArray = strings[1].split("\\(");
-						StringBuilder primaryName = new StringBuilder(methodArray[0]).append("(");
-						for (String arg : methodArray[1].replace(")", "").split(",")) {
-							primaryName.append(parseFieldDescriptorFromString(arg));
-						}
-						primaryName.append(")");
+
+						String primaryName = methodArray[0];
+
+						StringBuilder desc = new StringBuilder("(");
+						for (String arg : methodArray[1].replace(")", "").split(","))
+							desc.append(parseFieldDescriptorFromString(arg));
+						desc.append(")").append(parseFieldDescriptorFromString(strings[0]));
+
 						String secondaryName = strings[3];
-						tempM = new Method(tempC != null ? tempC.getSecondaryName() : "", secondaryName, primaryName.toString(), desc);
+
+						tempM = new Method(tempC != null ? tempC.getSecondaryName() : "", secondaryName, primaryName, desc.toString());
 					} else {
 						if (tempC != null && tempF != null)
 							tempC.addField(tempF);

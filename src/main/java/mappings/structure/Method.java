@@ -56,6 +56,6 @@ public class Method {
 	}
 
 	public String fancyContructorString() {
-		return desc + " | " + owner + "(" + primary.split("\\(")[1];
+		return desc + " | " + owner + "(" + desc.split("\\(")[1];
 	}
 }
