@@ -20,7 +20,6 @@ public class Intermediary {
 		try {
 			URL url1 = new URL(url.replace("%version%", version));
 			InputStream stream = url1.openStream();
-			Thread.sleep(500);
 			ArrayList<Byte> bytes = new ArrayList<>();
 			byte b;
 			while ((b = (byte) stream.read()) != -1) {
