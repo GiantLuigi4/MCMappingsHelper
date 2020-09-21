@@ -3,5 +3,6 @@
 /build/
 /build/classes/java/main/
 /build/classes/java/test/
-/mappings/
+/com.tfc.mappings/
 /.idea/
+/mappings/

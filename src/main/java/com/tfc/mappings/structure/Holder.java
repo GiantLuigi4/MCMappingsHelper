@@ -1,4 +1,4 @@
-package mappings.structure;
+package com.tfc.mappings.structure;
 
 import java.util.HashMap;
 
