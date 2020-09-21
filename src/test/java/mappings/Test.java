@@ -1,5 +1,8 @@
 package mappings;
 
+import mappings.structure.Holder;
+import mappings.types.Intermediary;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

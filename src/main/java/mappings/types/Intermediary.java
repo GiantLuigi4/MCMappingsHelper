@@ -1,4 +1,6 @@
-package mappings;
+package mappings.types;
+
+import mappings.structure.Holder;
 
 import java.io.InputStream;
 import java.net.URL;
