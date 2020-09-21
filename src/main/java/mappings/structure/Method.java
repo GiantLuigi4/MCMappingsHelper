@@ -54,4 +54,8 @@ public class Method {
 	public String fancyString() {
 		return desc + " | " + primary + " : " + secondary;
 	}
+
+	public String fancyContructorString() {
+		return desc + " | " + owner + "(" + primary.split("\\(")[1];
+	}
 }

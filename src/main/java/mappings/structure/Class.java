@@ -84,8 +84,15 @@ public class Class {
 	public String fancyString() {
 		StringBuilder map = new StringBuilder();
 		map.append("Class: ").append(primaryName).append(" : ").append(secondaryName).append("\n");
-		for (Method m : methods)
-			map.append("\tMethod: ").append(m.fancyString()).append("\n");
+		for (Method m : methods) {
+			if (m.getSecondary().equals("<init>")) {
+				map.append("\tConstructor: ").append(m.fancyContructorString()).append("\n");
+			} else if (m.getSecondary().equals("<clinit>")) {
+				map.append("\tStatic constructor: ").append(m.fancyContructorString()).append("\n");
+			} else {
+				map.append("\tMethod: ").append(m.fancyString()).append("\n");
+			}
+		}
 		for (Field f : fields)
 			map.append("\tField: ").append(f.fancyString()).append("\n");
 		return map.substring(0,map.length()-1);

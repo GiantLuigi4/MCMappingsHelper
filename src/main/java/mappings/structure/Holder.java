@@ -3,8 +3,10 @@ package mappings.structure;
 import java.util.HashMap;
 
 public class Holder {
-	private final HashMap<String,Class> classes = new HashMap<>();
-	
+	public final HashMap<String,Class> classes = new HashMap<>();
+
+	public Holder() {}
+
 	public Class getFromPrimaryName(String name) {
 		return classes.get(name);
 	}
