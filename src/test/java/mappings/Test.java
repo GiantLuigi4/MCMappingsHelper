@@ -50,8 +50,8 @@ public class Test {
 		stream.close();
 		Class block = holder1.getFromPrimaryName("net.minecraft.world.level.block.Block"); //primary name is real name, secondary is proguarded
 		for (Method m : block.getMethods())
-			System.out.println(m.getPrimary());
+			System.out.println(m.getDesc());
 		for (Field field : block.getFields())
-			System.out.println(field.getPrimary());
+			System.out.println(field.getDesc());
 	}
 }
