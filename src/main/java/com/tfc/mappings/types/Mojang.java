@@ -1,10 +1,10 @@
-package mappings.types;
+package com.tfc.mappings.types;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import mappings.structure.MojmapHolder;
+import com.tfc.mappings.structure.MojmapHolder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,6 +51,7 @@ public class Mojang {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return null;
 	}

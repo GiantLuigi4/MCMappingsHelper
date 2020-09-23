@@ -1,4 +1,4 @@
-package mappings.structure;
+package com.tfc.mappings.structure;
 
 public class MojmapHolder extends Holder {
 
@@ -18,7 +18,7 @@ public class MojmapHolder extends Holder {
 						classes.put(tempC.getPrimaryName(), tempC);
 					String otherName = s.split(" -> ")[1].replace(":", "");
 					String primary = s.split(" -> ")[0];
-					tempC = new Class(otherName, primary);
+					tempC = new Class(otherName, primary.replace(".","/"));
 					tempM = null;
 					tempF = null;
 				} else {

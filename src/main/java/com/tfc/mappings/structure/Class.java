@@ -1,4 +1,4 @@
-package mappings.structure;
+package com.tfc.mappings.structure;
 
 import java.util.ArrayList;
 import java.util.Objects;

@@ -1,6 +1,6 @@
-package mappings.types;
+package com.tfc.mappings.types;
 
-import mappings.structure.Holder;
+import com.tfc.mappings.structure.Holder;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -11,10 +11,10 @@ public class Intermediary {
 			"https://raw.githubusercontent.com/FabricMC/intermediary/master/mappings/%version%.tiny";
 	
 	/**
-	 * Creates a mappings holder from the fabric intermediary mappings
+	 * Creates a com.tfc.mappings holder from the fabric intermediary com.tfc.mappings
 	 *
 	 * @param version the version you want
-	 * @return the holder for the mappings
+	 * @return the holder for the com.tfc.mappings
 	 */
 	public static Holder generate(String version) {
 		try {
@@ -32,7 +32,7 @@ public class Intermediary {
 			return new Holder(new String(bytesA));
 		} catch (Throwable err) {
 			err.printStackTrace();
+			throw new RuntimeException(err);
 		}
-		return null;
 	}
 }
