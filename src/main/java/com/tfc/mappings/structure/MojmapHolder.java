@@ -23,15 +23,14 @@ public class MojmapHolder extends Holder {
 					tempF = null;
 				} else {
 					String noSpaceString = s.replace("    ", "");
-					if (Character.isDigit(s.charAt(4))) {
+					if (s.contains("(")) {
 						if (tempC != null && tempM != null)
 							tempC.addMethod(tempM);
-						String[] noNumberStrings = noSpaceString.split(":");
-						String[] strings = noNumberStrings[2].split("\\s");
+						String noNumberStrings = noSpaceString.replaceAll("(\\d*:)", "");
+						String[] strings = noNumberStrings.split("\\s");
 						String[] methodArray = strings[1].split("\\(");
 
 						String primaryName = methodArray[0];
-
 						StringBuilder desc = new StringBuilder("(");
 						for (String arg : methodArray[1].replace(")", "").split(","))
 							desc.append(parseFieldDescriptorFromString(arg));
