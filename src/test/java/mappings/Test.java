@@ -40,18 +40,14 @@ public class Test {
 			stream.write(clazz.getBytes());
 			stream.close();
 		}
-		Holder holder1 = Mojang.generate("1.16");
-		File f = new File("mappings\\mojmap\\1.16_formatted.txt");
+		Holder holder1 = Mojang.generate("1.15.2");
+		File f = new File("mappings\\mojmap\\1.15.2_formatted.txt");
 		f.getParentFile().mkdirs();
 		f.createNewFile();
 		FileOutputStream stream = new FileOutputStream(f);
 		assert holder1 != null;
 		stream.write(holder1.toFancyString().getBytes());
 		stream.close();
-		Class block = holder1.getFromPrimaryName("net.minecraft.world.level.block.Block"); //primary name is real name, secondary is proguarded
-		for (Method m : block.getMethods())
-			System.out.println(m.getDesc());
-		for (Field field : block.getFields())
-			System.out.println(field.getDesc());
+		Class clazz = holder1.getFromPrimaryName("net.minecraft.world.entity.AgableMob"); //primary name is real name, secondary is proguarded
 	}
 }
