@@ -8,7 +8,7 @@ public class Method {
 	private final String primary;
 	private final String desc;
 	
-	public Method(String owner, String primary, String secondary, String desc) {
+	public Method(String owner, String secondary, String primary, String desc) {
 		this.owner = owner;
 		this.secondary = secondary;
 		this.primary = primary;

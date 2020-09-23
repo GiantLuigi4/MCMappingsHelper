@@ -48,7 +48,7 @@ public class Holder {
 				primaryName_a = primaryName_a.substring(0,primaryName_a.indexOf("\t"));
 				String primaryName = s.replace("METHOD\t"+otherName+"\t"+desc+"\t"+primaryName_a+"\t","");
 				tempM = new Method(
-						otherName,primaryName_a,primaryName,desc
+						otherName,primaryName,primaryName_a,desc
 				);
 			} else if (s.startsWith("FIELD")) {
 				if (tempC != null && tempF != null)
