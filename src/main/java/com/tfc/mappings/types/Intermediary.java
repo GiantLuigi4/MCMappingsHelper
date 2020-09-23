@@ -32,7 +32,7 @@ public class Intermediary {
 			return new Holder(new String(bytesA));
 		} catch (Throwable err) {
 			err.printStackTrace();
+			throw new RuntimeException(err);
 		}
-		return null;
 	}
 }

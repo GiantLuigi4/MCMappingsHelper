@@ -51,6 +51,7 @@ public class Mojang {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return null;
 	}
