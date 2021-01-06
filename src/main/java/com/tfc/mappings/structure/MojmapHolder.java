@@ -52,32 +52,4 @@ public class MojmapHolder extends Holder {
 			}
 		}
 	}
-
-	private String parseFieldDescriptorFromString(String desc) {
-		StringBuilder parsed = new StringBuilder();
-		if (desc.contains("[]"))
-			parsed.append("[");
-		if (desc.contains("long"))
-			parsed.append("J");
-		else if (desc.contains("int"))
-			parsed.append("I");
-		else if (desc.contains("short"))
-			parsed.append("S");
-		else if (desc.contains("byte"))
-			parsed.append("B");
-		else if (desc.contains("char"))
-			parsed.append("C");
-		else if (desc.contains("float"))
-			parsed.append("F");
-		else if (desc.contains("double"))
-			parsed.append("D");
-		else if (desc.contains("boolean"))
-			parsed.append("Z");
-		else if (desc.contains("void"))
-			parsed.append("V");
-		else if (!desc.equals(""))
-			parsed.append("L").append(desc.replace(".", "/").replace("[]", "")).append(";");
-
-		return parsed.toString();
-	}
 }

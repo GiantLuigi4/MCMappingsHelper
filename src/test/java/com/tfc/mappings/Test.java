@@ -1,17 +1,17 @@
 package com.tfc.mappings;
 
 import com.tfc.mappings.structure.Class;
+import com.tfc.mappings.structure.FlameMapHolder;
 import com.tfc.mappings.structure.Holder;
 import com.tfc.mappings.types.Intermediary;
 import com.tfc.mappings.types.Mojang;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.Date;
 
 public class Test {
-	public static void main(String[] args) throws IOException {
+	public static void main2(String[] args) throws IOException {
 		for (int i = 14; i <= 16; i++) {
 			for (int sub = 0;sub<10;sub++) {
 				String ver = i+"."+sub;
@@ -78,5 +78,45 @@ public class Test {
 //			System.out.println(m.getDesc());
 //		for (Field field : block.getFields())
 //			System.out.println(field.getDesc());
+	}
+
+	public static void main(String[] args) {
+		try {
+			long startMap = new Date().getTime();
+			Holder holder = new FlameMapHolder(readUrl("https://raw.githubusercontent.com/GiantLuigi4/FlameAPI-MC-Rewrite/master/mappings/flame_mappings.mappings"));
+			long endMap = new Date().getTime();
+			System.out.println("Mapping flame took: " + (endMap - startMap) + " ms");
+			holder.classes.forEach((s, c) -> System.out.println(c.fancyString()));
+			long startWrite = new Date().getTime();
+			File f = new File("mappings\\flame\\mappings_formatted.txt");
+			f.getParentFile().mkdirs();
+			f.createNewFile();
+			FileOutputStream stream = new FileOutputStream(f);
+			stream.write(holder.toFancyString().getBytes());
+			stream.close();
+			long endWrite = new Date().getTime();
+			System.out.println("Writing version took: " + (endWrite - startWrite) + " ms");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static String readUrl(String urlString) throws IOException {
+		BufferedReader reader = null;
+		try {
+			URL url = new URL(urlString);
+			reader = new BufferedReader(new InputStreamReader(url.openStream()));
+			StringBuilder builder = new StringBuilder();
+			int read;
+			char[] chars = new char[1024];
+			while ((read = reader.read(chars)) != -1)
+				builder.append(chars, 0, read);
+
+			return builder.toString();
+
+		} finally {
+			if (reader != null)
+				reader.close();
+		}
 	}
 }
