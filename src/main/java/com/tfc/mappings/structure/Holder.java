@@ -66,6 +66,13 @@ public class Holder {
 			}
 		}
 //		System.out.println(classes.toString());
+		
+		if (tempC != null && tempM != null)
+			tempC.addMethod(tempM);
+		if (tempC != null && tempF != null)
+			tempC.addField(tempF);
+		if (tempC != null)
+			classes.put(tempC.getPrimaryName(), tempC);
 	}
 	
 	@Override

@@ -38,5 +38,12 @@ public class FlameMapHolder extends Holder {
 				currMethod = new Method(currClass != null ? currClass.getSecondaryName() : "", secondaryName, primaryName, desc);
 			}
 		}
+		
+		if (currClass != null && currMethod != null)
+			currClass.addMethod(currMethod);
+		if (currClass != null && currField != null)
+			currClass.addField(currField);
+		if (currClass != null)
+			classes.put(currClass.getPrimaryName(), currClass);
 	}
 }
