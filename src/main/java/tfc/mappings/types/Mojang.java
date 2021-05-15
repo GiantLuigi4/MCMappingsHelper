@@ -1,10 +1,10 @@
-package com.tfc.mappings.types;
+package tfc.mappings.types;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.tfc.mappings.structure.MojmapHolder;
+import tfc.mappings.structure.MojmapHolder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class Mojang {
 		return null;
 	}
 
-	private static String readUrl(String urlString) throws IOException {
+	protected static String readUrl(String urlString) throws IOException {
 		BufferedReader reader = null;
 		try {
 			URL url = new URL(urlString);

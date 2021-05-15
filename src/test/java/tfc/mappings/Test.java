@@ -1,10 +1,10 @@
-package com.tfc.mappings;
+package tfc.mappings;
 
-import com.tfc.mappings.structure.Class;
-import com.tfc.mappings.structure.FlameMapHolder;
-import com.tfc.mappings.structure.Holder;
-import com.tfc.mappings.types.Intermediary;
-import com.tfc.mappings.types.Mojang;
+import tfc.mappings.structure.FlameMapHolder;
+import tfc.mappings.structure.MappingsHolder;
+import tfc.mappings.types.Intermediary;
+import tfc.mappings.types.Mojang;
+import tfc.mappings.types.Searge;
 
 import java.io.*;
 import java.net.URL;
@@ -20,7 +20,7 @@ public class Test {
 				}
 				try {
 					long startMap = new Date().getTime();
-					Holder holder = Intermediary.generate("1." + ver);
+					MappingsHolder holder = Intermediary.generate("1." + ver);
 					long endMap = new Date().getTime();
 					System.out.println("Mapping version 1." + ver + " took: " + (endMap - startMap) + " ms");
 					long startWrite = new Date().getTime();
@@ -47,7 +47,7 @@ public class Test {
 				}
 				try {
 					long startMap = new Date().getTime();
-					Holder holder = Mojang.generate("1." + ver);
+					MappingsHolder holder = Mojang.generate("1." + ver);
 					long endMap = new Date().getTime();
 					System.out.println("Mapping version 1." + ver + " took: " + (endMap - startMap) + " ms");
 					long startWrite = new Date().getTime();
@@ -72,6 +72,33 @@ public class Test {
 					stream.close();
 				} catch (Throwable ignored) {
 				}
+				try {
+					long startMap = new Date().getTime();
+					MappingsHolder holder = Searge.generate("1." + ver);
+					long endMap = new Date().getTime();
+					System.out.println("Mapping version 1." + ver + " took: " + (endMap - startMap) + " ms");
+					long startWrite = new Date().getTime();
+					File f = new File("mappings\\searge\\1." + ver + "_formatted.txt");
+					f.getParentFile().mkdirs();
+					f.createNewFile();
+					FileOutputStream stream = new FileOutputStream(f);
+					assert holder != null;
+					stream.write(holder.toFancyString().getBytes());
+					stream.close();
+					long endWrite = new Date().getTime();
+					System.out.println("Writing version 1." + ver + " took: " + (endWrite - startWrite) + " ms");
+					long startFind = new Date().getTime();
+					String clazz = (holder.getFromPrimaryName("net/minecraft/entity/monster/PhantomEntity").fancyString());
+					long endFind = new Date().getTime();
+					System.out.println("Finding phantom for version 1." + ver + " took: " + (endFind - startFind) + " ms\n");
+					f = new File("mappings\\searge\\1." + ver + "_phantom_class.txt");
+					f.getParentFile().mkdirs();
+					f.createNewFile();
+					stream = new FileOutputStream(f);
+					stream.write(clazz.getBytes());
+					stream.close();
+				} catch (Throwable ignored) {
+				}
 			}
 		}
 //		for (Method m : block.getMethods())
@@ -81,9 +108,16 @@ public class Test {
 	}
 
 	public static void main(String[] args) {
+		if (true) {
+			try {
+				main2(args);
+			} catch (Throwable ignored) {
+			}
+			return;
+		}
 		try {
 			long startMap = new Date().getTime();
-			Holder holder = new FlameMapHolder(readUrl("https://raw.githubusercontent.com/GiantLuigi4/FlameAPI-MC-Rewrite/master/mappings/flame_mappings.mappings"));
+			MappingsHolder holder = new FlameMapHolder(readUrl("https://raw.githubusercontent.com/GiantLuigi4/FlameAPI-MC-Rewrite/master/mappings/flame_mappings.mappings"));
 			long endMap = new Date().getTime();
 			System.out.println("Mapping flame took: " + (endMap - startMap) + " ms");
 			holder.classes.forEach((s, c) -> System.out.println(c.fancyString()));
@@ -100,7 +134,7 @@ public class Test {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private static String readUrl(String urlString) throws IOException {
 		BufferedReader reader = null;
 		try {
@@ -111,9 +145,9 @@ public class Test {
 			char[] chars = new char[1024];
 			while ((read = reader.read(chars)) != -1)
 				builder.append(chars, 0, read);
-
+			
 			return builder.toString();
-
+			
 		} finally {
 			if (reader != null)
 				reader.close();

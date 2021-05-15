@@ -1,12 +1,10 @@
-package com.tfc.mappings.structure;
+package tfc.mappings.structure;
 
-public class MojmapHolder extends Holder {
-
+public class MojmapHolder extends MappingsHolder {
 	public MojmapHolder(String mappings) {
-		super();
-		Class tempC = null;
-		Method tempM = null;
-		Field tempF = null;
+		MappingsClass tempC = null;
+		MappingsMethod tempM = null;
+		MappingsField tempF = null;
 		for (String s : mappings.split("\n")) {
 			if (!s.startsWith("#")) {
 				if (!s.startsWith(" ")) {
@@ -18,7 +16,7 @@ public class MojmapHolder extends Holder {
 						classes.put(tempC.getPrimaryName(), tempC);
 					String otherName = s.split(" -> ")[1].replace(":", "");
 					String primary = s.split(" -> ")[0];
-					tempC = new Class(otherName, primary.replace(".","/"));
+					tempC = new MappingsClass(otherName, primary.replace(".","/"));
 					tempM = null;
 					tempF = null;
 				} else {
@@ -38,7 +36,7 @@ public class MojmapHolder extends Holder {
 
 						String secondaryName = strings[3];
 
-						tempM = new Method(tempC != null ? tempC.getSecondaryName() : "", secondaryName, primaryName, desc.toString());
+						tempM = new MappingsMethod(tempC != null ? tempC.getSecondaryName() : "", secondaryName, primaryName, desc.toString());
 					} else {
 						if (tempC != null && tempF != null)
 							tempC.addField(tempF);
@@ -46,7 +44,7 @@ public class MojmapHolder extends Holder {
 						String desc = parseFieldDescriptorFromString(strings[0]);
 						String primaryName = strings[1];
 						String secondaryName = strings[3];
-						tempF = new Field(tempC != null ? tempC.getSecondaryName() : "", secondaryName, primaryName, desc);
+						tempF = new MappingsField(tempC != null ? tempC.getSecondaryName() : "", secondaryName, primaryName, desc);
 					}
 				}
 			}

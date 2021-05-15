@@ -1,26 +1,26 @@
-package com.tfc.mappings.structure;
+package tfc.mappings.structure;
 
 import java.util.HashMap;
 
-public class Holder {
-	public final HashMap<String,Class> classes = new HashMap<>();
+public class MappingsHolder {
+	public final HashMap<String, MappingsClass> classes = new HashMap<>();
 
-	public Holder() {}
+	public MappingsHolder() {}
 
-	public Class getFromPrimaryName(String name) {
+	public MappingsClass getFromPrimaryName(String name) {
 		return classes.get(name);
 	}
 	
-	public Class getFromSecondaryName(String name) {
-		for (Class c : classes.values())
+	public MappingsClass getFromSecondaryName(String name) {
+		for (MappingsClass c : classes.values())
 			if (c.getSecondaryName().equals(name)) return c;
 		return null;
 	}
 	
-	public Holder(String mappings) {
-		Class tempC = null;
-		Method tempM = null;
-		Field tempF = null;
+	public MappingsHolder(String mappings) {
+		MappingsClass tempC = null;
+		MappingsMethod tempM = null;
+		MappingsField tempF = null;
 		for (String s : mappings.split("\n")) {
 			if (s.startsWith("CLASS")) {
 				if (tempC != null && tempM != null)
@@ -32,7 +32,7 @@ public class Holder {
 				String otherName = s.replace("CLASS\t","");
 				otherName = otherName.substring(0,otherName.indexOf("\t"));
 				String primary = s.replace("CLASS\t"+otherName+"\t","");
-				tempC = new Class(
+				tempC = new MappingsClass(
 						otherName,primary
 				);
 				tempM = null;
@@ -47,7 +47,7 @@ public class Holder {
 				String primaryName_a = s.replace("METHOD\t"+otherName+"\t"+desc+"\t","");
 				primaryName_a = primaryName_a.substring(0,primaryName_a.indexOf("\t"));
 				String primaryName = s.replace("METHOD\t"+otherName+"\t"+desc+"\t"+primaryName_a+"\t","");
-				tempM = new Method(
+				tempM = new MappingsMethod(
 						otherName,primaryName_a,primaryName,desc
 				);
 			} else if (s.startsWith("FIELD")) {
@@ -60,7 +60,7 @@ public class Holder {
 				String primaryName_a = s.replace("FIELD\t"+otherName+"\t"+desc+"\t","");
 				primaryName_a = primaryName_a.substring(0,primaryName_a.indexOf("\t"));
 				String primaryName = s.replace("FIELD\t"+otherName+"\t"+desc+"\t"+primaryName_a+"\t","");
-				tempF = new Field(
+				tempF = new MappingsField(
 						otherName,primaryName_a,primaryName,desc
 				);
 			}
@@ -82,7 +82,7 @@ public class Holder {
 	
 	public String toFancyString() {
 		StringBuilder map = new StringBuilder();
-		for (Class c:classes.values()) {
+		for (MappingsClass c:classes.values()) {
 			map.append(c.fancyString()).append("\n");
 		}
 		return map.toString();

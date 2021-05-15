@@ -1,14 +1,14 @@
-package com.tfc.mappings.structure;
+package tfc.mappings.structure;
 
 import java.util.Objects;
 
-public class Field {
+public class MappingsMethod {
 	private final String owner;
 	private final String secondary;
 	private final String primary;
 	private final String desc;
 	
-	public Field(String owner, String secondary, String primary, String desc) {
+	public MappingsMethod(String owner, String secondary, String primary, String desc) {
 		this.owner = owner;
 		this.secondary = secondary;
 		this.primary = primary;
@@ -19,11 +19,11 @@ public class Field {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Field field = (Field) o;
-		return Objects.equals(owner, field.owner) &&
-				Objects.equals(secondary, field.secondary) &&
-				Objects.equals(primary, field.primary) &&
-				Objects.equals(desc, field.desc);
+		MappingsMethod method = (MappingsMethod) o;
+		return Objects.equals(owner, method.owner) &&
+				Objects.equals(secondary, method.secondary) &&
+				Objects.equals(primary, method.primary) &&
+				Objects.equals(desc, method.desc);
 	}
 	
 	@Override
@@ -53,5 +53,9 @@ public class Field {
 	
 	public String fancyString() {
 		return desc + " | " + primary + " : " + secondary;
+	}
+
+	public String fancyContructorString() {
+		return desc + " | " + owner + "(" + desc.split("\\(")[1];
 	}
 }

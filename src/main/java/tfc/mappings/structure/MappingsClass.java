@@ -1,30 +1,30 @@
-package com.tfc.mappings.structure;
+package tfc.mappings.structure;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Class {
-	private final ArrayList<Method> methods = new ArrayList<>();
-	private final ArrayList<Field> fields = new ArrayList<>();
+public class MappingsClass {
+	private final ArrayList<MappingsMethod> methods = new ArrayList<>();
+	private final ArrayList<MappingsField> fields = new ArrayList<>();
 	
 	private final String secondaryName;
 	private final String primaryName;
 	
-	public Class(String secondaryName, String primaryName) {
+	public MappingsClass(String secondaryName, String primaryName) {
 		this.secondaryName = secondaryName;
 		this.primaryName = primaryName;
 	}
 	
-	protected void addMethod(Method method) {
+	protected void addMethod(MappingsMethod method) {
 		methods.add(method);
 	}
 	
-	protected void addField(Field field) {
+	protected void addField(MappingsField field) {
 		fields.add(field);
 	}
 	
-	public Method getMethodPrimary(String inter) {
-		for (Method m : methods) {
+	public MappingsMethod getMethodPrimary(String inter) {
+		for (MappingsMethod m : methods) {
 			if (m.getPrimary().equals(inter))
 				return m;
 		}
@@ -35,7 +35,7 @@ public class Class {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Class aClass = (Class) o;
+		MappingsClass aClass = (MappingsClass) o;
 		return Objects.equals(methods, aClass.methods) &&
 				Objects.equals(fields, aClass.fields) &&
 				Objects.equals(secondaryName, aClass.secondaryName) &&
@@ -57,19 +57,19 @@ public class Class {
 				'}';
 	}
 	
-	public Method getMethodSecondary(String inter) {
-		for (Method m : methods) {
+	public MappingsMethod getMethodSecondary(String inter) {
+		for (MappingsMethod m : methods) {
 			if (m.getSecondary().equals(inter))
 				return m;
 		}
 		return null;
 	}
 	
-	public ArrayList<Method> getMethods() {
+	public ArrayList<MappingsMethod> getMethods() {
 		return methods;
 	}
 	
-	public ArrayList<Field> getFields() {
+	public ArrayList<MappingsField> getFields() {
 		return fields;
 	}
 	
@@ -84,7 +84,7 @@ public class Class {
 	public String fancyString() {
 		StringBuilder map = new StringBuilder();
 		map.append("Class: ").append(primaryName).append(" : ").append(secondaryName).append("\n");
-		for (Method m : methods) {
+		for (MappingsMethod m : methods) {
 			if (m.getSecondary().equals("<init>")) {
 				map.append("\tConstructor: ").append(m.fancyContructorString()).append("\n");
 			} else if (m.getSecondary().equals("<clinit>")) {
@@ -93,7 +93,7 @@ public class Class {
 				map.append("\tMethod: ").append(m.fancyString()).append("\n");
 			}
 		}
-		for (Field f : fields)
+		for (MappingsField f : fields)
 			map.append("\tField: ").append(f.fancyString()).append("\n");
 		return map.substring(0,map.length()-1);
 	}
