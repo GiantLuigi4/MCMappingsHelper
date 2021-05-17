@@ -7,7 +7,11 @@ public class FlameMapHolder extends MappingsHolder {
 		MappingsMethod currMethod = null;
 		MappingsField currField = null;
 		for (String s : mappings.split("\n")) {
-			if (!s.startsWith("f-") && !s.startsWith("m-") && !s.isEmpty()) {
+			if (s.startsWith("e-")) {
+				assert currClass != null;
+				for (MappingsMethod method : getFromSecondaryName(s.substring(2)).getMethods())
+					currClass.addMethod(method);
+			} else if (!s.startsWith("f-") && !s.startsWith("m-") && !s.isEmpty()) {
 				if (currClass != null && currMethod != null)
 					currClass.addMethod(currMethod);
 				if (currClass != null && currField != null)

@@ -108,7 +108,7 @@ public class Test {
 	}
 
 	public static void main(String[] args) {
-		if (true) {
+		if (false) {
 			try {
 				main2(args);
 			} catch (Throwable ignored) {
