@@ -2,8 +2,10 @@ package tfc.mappings.types;
 
 import tfc.mappings.structure.MappingsHolder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class Intermediary {
@@ -18,18 +20,21 @@ public class Intermediary {
 	 */
 	public static MappingsHolder generate(String version) {
 		try {
-			URL url1 = new URL(url.replace("%version%", version));
-			InputStream stream = url1.openStream();
-			ArrayList<Byte> bytes = new ArrayList<>();
-			byte b;
-			while ((b = (byte) stream.read()) != -1) {
-				bytes.add(b);
-			}
+			URL u = new URL(url.replace("%version%", version));
+			
+			URLConnection connection = u.openConnection();
+			InputStream stream = connection.getInputStream();
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			byte[] buf = new byte[Math.max(4096, stream.available())];
+			int read;
+			while ((read = stream.read(buf)) != -1)
+				outputStream.write(buf, 0, read);
+			String txt = outputStream.toString();
 			stream.close();
-			byte[] bytesA = new byte[bytes.size()];
-			for (int i = 0; i < bytes.size(); i++)
-				bytesA[i] = bytes.get(i);
-			return new MappingsHolder(new String(bytesA));
+			outputStream.close();
+			outputStream.flush();
+			
+			return new MappingsHolder(txt);
 		} catch (Throwable err) {
 			err.printStackTrace();
 			throw new RuntimeException(err);

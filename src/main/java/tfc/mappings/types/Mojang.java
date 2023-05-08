@@ -6,10 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import tfc.mappings.structure.MojmapHolder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -59,16 +58,21 @@ public class Mojang {
 	protected static String readUrl(String urlString) throws IOException {
 		BufferedReader reader = null;
 		try {
-			URL url = new URL(urlString);
-			reader = new BufferedReader(new InputStreamReader(url.openStream()));
-			StringBuilder builder = new StringBuilder();
+			URL u = new URL(urlString);
+			
+			URLConnection connection = u.openConnection();
+			InputStream stream = connection.getInputStream();
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			byte[] buf = new byte[Math.max(4096, stream.available())];
 			int read;
-			char[] chars = new char[1024];
-			while ((read = reader.read(chars)) != -1)
-				builder.append(chars, 0, read);
-
-			return builder.toString();
-
+			while ((read = stream.read(buf)) != -1)
+				outputStream.write(buf, 0, read);
+			String txt = outputStream.toString();
+			stream.close();
+			outputStream.close();
+			outputStream.flush();
+			
+			return txt;
 		} finally {
 			if (reader != null)
 				reader.close();
