@@ -7,30 +7,38 @@ public class MappingsClass {
 	private final ArrayList<MappingsMethod> methods = new ArrayList<>();
 	private final ArrayList<MappingsField> fields = new ArrayList<>();
 	
-	private final String secondaryName;
-	private final String primaryName;
+	private final String obsfucationName;
+	private final String mappedName;
 	
-	public MappingsClass(String secondaryName, String primaryName) {
-		this.secondaryName = secondaryName;
-		this.primaryName = primaryName;
+	public MappingsClass(String obsfucationName, String mappedName) {
+		this.obsfucationName = obsfucationName;
+		this.mappedName = mappedName;
 	}
 	
-	protected void addMethod(MappingsMethod method) {
+	public void addMethod(MappingsMethod method) {
 		methods.add(method);
 	}
-	
-	protected void addField(MappingsField field) {
+
+	public void addField(MappingsField field) {
 		fields.add(field);
 	}
 	
-	public MappingsMethod getMethodPrimary(String inter) {
+	public MappingsMethod methodFromMapped(String inter) {
 		for (MappingsMethod m : methods) {
-			if (m.getPrimary().equals(inter))
+			if (m.getMapped().equals(inter))
 				return m;
 		}
 		return null;
 	}
-	
+
+	public MappingsMethod methodFromObsf(String inter) {
+		for (MappingsMethod m : methods) {
+			if (m.getObsf().equals(inter))
+				return m;
+		}
+		return null;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -38,33 +46,25 @@ public class MappingsClass {
 		MappingsClass aClass = (MappingsClass) o;
 		return Objects.equals(methods, aClass.methods) &&
 				Objects.equals(fields, aClass.fields) &&
-				Objects.equals(secondaryName, aClass.secondaryName) &&
-				Objects.equals(primaryName, aClass.primaryName);
+				Objects.equals(obsfucationName, aClass.obsfucationName) &&
+				Objects.equals(mappedName, aClass.mappedName);
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(methods, fields, secondaryName, primaryName);
+		return Objects.hash(methods, fields, obsfucationName, mappedName);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Class{" +
 				"methods=" + methods +
 				", fields=" + fields +
-				", secondaryName='" + secondaryName + '\'' +
-				", primaryName='" + primaryName + '\'' +
+				", secondaryName='" + obsfucationName + '\'' +
+				", primaryName='" + mappedName + '\'' +
 				'}';
 	}
-	
-	public MappingsMethod getMethodSecondary(String inter) {
-		for (MappingsMethod m : methods) {
-			if (m.getSecondary().equals(inter))
-				return m;
-		}
-		return null;
-	}
-	
+
 	public ArrayList<MappingsMethod> getMethods() {
 		return methods;
 	}
@@ -73,21 +73,21 @@ public class MappingsClass {
 		return fields;
 	}
 	
-	public String getSecondaryName() {
-		return secondaryName;
+	public String getObsfucationName() {
+		return obsfucationName;
 	}
 	
-	public String getPrimaryName() {
-		return primaryName;
+	public String getMappedName() {
+		return mappedName;
 	}
 	
 	public String fancyString() {
 		StringBuilder map = new StringBuilder();
-		map.append("Class: ").append(primaryName).append(" : ").append(secondaryName).append("\n");
+		map.append("Class: ").append(mappedName).append(" : ").append(obsfucationName).append("\n");
 		for (MappingsMethod m : methods) {
-			if (m.getSecondary().equals("<init>")) {
+			if (m.getObsf().equals("<init>")) {
 				map.append("\tConstructor: ").append(m.fancyContructorString()).append("\n");
-			} else if (m.getSecondary().equals("<clinit>")) {
+			} else if (m.getObsf().equals("<clinit>")) {
 				map.append("\tStatic constructor: ").append(m.fancyContructorString()).append("\n");
 			} else {
 				map.append("\tMethod: ").append(m.fancyString()).append("\n");

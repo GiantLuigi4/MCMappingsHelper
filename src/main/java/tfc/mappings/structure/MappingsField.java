@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class MappingsField {
 	private final String owner;
-	private final String secondary;
-	private final String primary;
+	private final String obsfucation;
+	private final String mapped;
 	private final String desc;
 	
-	public MappingsField(String owner, String secondary, String primary, String desc) {
+	public MappingsField(String owner, String obsfucation, String mapped, String desc) {
 		this.owner = owner;
-		this.secondary = secondary;
-		this.primary = primary;
+		this.obsfucation = obsfucation;
+		this.mapped = mapped;
 		this.desc = desc;
 	}
 	
@@ -21,26 +21,26 @@ public class MappingsField {
 		if (o == null || getClass() != o.getClass()) return false;
 		MappingsField field = (MappingsField) o;
 		return Objects.equals(owner, field.owner) &&
-				Objects.equals(secondary, field.secondary) &&
-				Objects.equals(primary, field.primary) &&
+				Objects.equals(obsfucation, field.obsfucation) &&
+				Objects.equals(mapped, field.mapped) &&
 				Objects.equals(desc, field.desc);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(owner, secondary, primary, desc);
+		return Objects.hash(owner, obsfucation, mapped, desc);
 	}
 	
 	public String getOwner() {
 		return owner;
 	}
 	
-	public String getSecondary() {
-		return secondary;
+	public String getObsfucation() {
+		return obsfucation;
 	}
 	
-	public String getPrimary() {
-		return primary;
+	public String getMapped() {
+		return mapped;
 	}
 	
 	public String getDesc() {
@@ -48,10 +48,10 @@ public class MappingsField {
 	}
 	
 	public String toString() {
-		return desc + ":" + owner + ":" + secondary + ":" + primary;
+		return desc + ":" + owner + ":" + obsfucation + ":" + mapped;
 	}
 	
 	public String fancyString() {
-		return desc + " | " + primary + " : " + secondary;
+		return desc + " | " + mapped + " : " + obsfucation;
 	}
 }

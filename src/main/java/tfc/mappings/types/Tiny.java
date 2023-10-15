@@ -1,14 +1,14 @@
 package tfc.mappings.types;
 
 import tfc.mappings.structure.MappingsHolder;
+import tfc.mappings.structure.impl.TinyHolder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 
-public class Intermediary {
+public class Tiny {
 	private static final String url =
 			"https://raw.githubusercontent.com/FabricMC/intermediary/master/mappings/%version%.tiny";
 	
@@ -34,7 +34,7 @@ public class Intermediary {
 			outputStream.close();
 			outputStream.flush();
 			
-			return new MappingsHolder(txt);
+			return new TinyHolder(txt);
 		} catch (Throwable err) {
 			err.printStackTrace();
 			throw new RuntimeException(err);

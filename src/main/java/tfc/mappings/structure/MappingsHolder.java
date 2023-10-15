@@ -3,86 +3,32 @@ package tfc.mappings.structure;
 import java.util.HashMap;
 
 public class MappingsHolder {
-	public final HashMap<String, MappingsClass> classes = new HashMap<>();
+	public final HashMap<String, MappingsClass> classesByMap = new HashMap<>();
+	public final HashMap<String, MappingsClass> classesByObf = new HashMap<>();
 
 	public MappingsHolder() {}
 
-	public MappingsClass getFromPrimaryName(String name) {
-		return classes.get(name);
+	public MappingsClass getFromMapped(String name) {
+		return classesByMap.get(name);
 	}
 	
-	public MappingsClass getFromSecondaryName(String name) {
-		for (MappingsClass c : classes.values())
-			if (c.getSecondaryName().equals(name)) return c;
-		return null;
+	public MappingsClass getFromObsf(String name) {
+		return classesByObf.get(name);
 	}
-	
-	public MappingsHolder(String mappings) {
-		MappingsClass tempC = null;
-		MappingsMethod tempM = null;
-		MappingsField tempF = null;
-		for (String s : mappings.split("\n")) {
-			if (s.startsWith("CLASS")) {
-				if (tempC != null && tempM != null)
-					tempC.addMethod(tempM);
-				if (tempC != null && tempF != null)
-					tempC.addField(tempF);
-				if (tempC != null)
-					classes.put(tempC.getPrimaryName(),tempC);
-				String otherName = s.replace("CLASS\t","");
-				otherName = otherName.substring(0,otherName.indexOf("\t"));
-				String primary = s.replace("CLASS\t"+otherName+"\t","");
-				tempC = new MappingsClass(
-						otherName,primary
-				);
-				tempM = null;
-				tempF = null;
-			} else if (s.startsWith("METHOD")) {
-				if (tempC != null && tempM != null)
-					tempC.addMethod(tempM);
-				String otherName = s.replace("METHOD\t","");
-				otherName = otherName.substring(0,otherName.indexOf("\t"));
-				String desc = s.replace("METHOD\t"+otherName+"\t","");
-				desc = desc.substring(0,desc.indexOf("\t"));
-				String primaryName_a = s.replace("METHOD\t"+otherName+"\t"+desc+"\t","");
-				primaryName_a = primaryName_a.substring(0,primaryName_a.indexOf("\t"));
-				String primaryName = s.replace("METHOD\t"+otherName+"\t"+desc+"\t"+primaryName_a+"\t","");
-				tempM = new MappingsMethod(
-						otherName,primaryName_a,primaryName,desc
-				);
-			} else if (s.startsWith("FIELD")) {
-				if (tempC != null && tempF != null)
-					tempC.addField(tempF);
-				String otherName = s.replace("FIELD\t","");
-				otherName = otherName.substring(0,otherName.indexOf("\t"));
-				String desc = s.replace("FIELD\t"+otherName+"\t","");
-				desc = desc.substring(0,desc.indexOf("\t"));
-				String primaryName_a = s.replace("FIELD\t"+otherName+"\t"+desc+"\t","");
-				primaryName_a = primaryName_a.substring(0,primaryName_a.indexOf("\t"));
-				String primaryName = s.replace("FIELD\t"+otherName+"\t"+desc+"\t"+primaryName_a+"\t","");
-				tempF = new MappingsField(
-						otherName,primaryName_a,primaryName,desc
-				);
-			}
-		}
-//		System.out.println(classes.toString());
-		
-		if (tempC != null && tempM != null)
-			tempC.addMethod(tempM);
-		if (tempC != null && tempF != null)
-			tempC.addField(tempF);
-		if (tempC != null)
-			classes.put(tempC.getPrimaryName(), tempC);
+
+	protected void addClass(MappingsClass mappingsClass) {
+		classesByMap.put(mappingsClass.getMappedName(), mappingsClass);
+		classesByObf.put(mappingsClass.getObsfucationName(), mappingsClass);
 	}
-	
+
 	@Override
 	public String toString() {
-		return classes.toString();
+		return classesByMap.toString();
 	}
 	
 	public String toFancyString() {
 		StringBuilder map = new StringBuilder();
-		for (MappingsClass c:classes.values()) {
+		for (MappingsClass c: classesByMap.values()) {
 			map.append(c.fancyString()).append("\n");
 		}
 		return map.toString();

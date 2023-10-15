@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import tfc.mappings.structure.MojmapHolder;
+import tfc.mappings.structure.impl.MojmapHolder;
 
 import java.io.*;
 import java.net.URL;

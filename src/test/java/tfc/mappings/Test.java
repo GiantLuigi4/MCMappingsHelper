@@ -1,8 +1,8 @@
 package tfc.mappings;
 
-import tfc.mappings.structure.FlameMapHolder;
+import tfc.mappings.structure.impl.FlameMapHolder;
 import tfc.mappings.structure.MappingsHolder;
-import tfc.mappings.types.Intermediary;
+import tfc.mappings.types.Tiny;
 import tfc.mappings.types.Mojang;
 import tfc.mappings.types.Searge;
 
@@ -20,7 +20,7 @@ public class Test {
 				}
 				try {
 					long startMap = new Date().getTime();
-					MappingsHolder holder = Intermediary.generate("1." + ver);
+					MappingsHolder holder = Tiny.generate("1." + ver);
 					long endMap = new Date().getTime();
 					System.out.println("Mapping version 1." + ver + " took: " + (endMap - startMap) + " ms");
 					long startWrite = new Date().getTime();
@@ -34,7 +34,7 @@ public class Test {
 					long endWrite = new Date().getTime();
 					System.out.println("Writing version 1." + ver + " took: " + (endWrite - startWrite) + " ms");
 					long startFind = new Date().getTime();
-					String clazz = (holder.getFromPrimaryName("net/minecraft/class_1593").fancyString());
+					String clazz = (holder.getFromMapped("net/minecraft/class_1593").fancyString());
 					long endFind = new Date().getTime();
 					System.out.println("Finding phantom for version 1." + i + " took: " + (endFind - startFind) + " ms\n");
 					f = new File("mappings\\inter\\1." + i + "_phantom_class.txt");
@@ -61,7 +61,7 @@ public class Test {
 					long endWrite = new Date().getTime();
 					System.out.println("Writing version 1." + ver + " took: " + (endWrite - startWrite) + " ms");
 					long startFind = new Date().getTime();
-					String clazz = (holder.getFromPrimaryName("net/minecraft/world/entity/monster/Phantom").fancyString());
+					String clazz = (holder.getFromMapped("net/minecraft/world/entity/monster/Phantom").fancyString());
 					long endFind = new Date().getTime();
 					System.out.println("Finding phantom for version 1." + ver + " took: " + (endFind - startFind) + " ms\n");
 					f = new File("mappings\\mojmap\\1." + ver + "_phantom_class.txt");
@@ -88,7 +88,7 @@ public class Test {
 					long endWrite = new Date().getTime();
 					System.out.println("Writing version 1." + ver + " took: " + (endWrite - startWrite) + " ms");
 					long startFind = new Date().getTime();
-					String clazz = (holder.getFromPrimaryName("net/minecraft/entity/monster/PhantomEntity").fancyString());
+					String clazz = (holder.getFromMapped("net/minecraft/entity/monster/PhantomEntity").fancyString());
 					long endFind = new Date().getTime();
 					System.out.println("Finding phantom for version 1." + ver + " took: " + (endFind - startFind) + " ms\n");
 					f = new File("mappings\\searge\\1." + ver + "_phantom_class.txt");
@@ -120,7 +120,7 @@ public class Test {
 			MappingsHolder holder = new FlameMapHolder(readUrl("https://raw.githubusercontent.com/GiantLuigi4/FlameAPI-MC-Rewrite/master/mappings/flame_mappings.mappings"));
 			long endMap = new Date().getTime();
 			System.out.println("Mapping flame took: " + (endMap - startMap) + " ms");
-			holder.classes.forEach((s, c) -> System.out.println(c.fancyString()));
+			holder.classesByMap.forEach((s, c) -> System.out.println(c.fancyString()));
 			long startWrite = new Date().getTime();
 			File f = new File("mappings\\flame\\mappings_formatted.txt");
 			f.getParentFile().mkdirs();
