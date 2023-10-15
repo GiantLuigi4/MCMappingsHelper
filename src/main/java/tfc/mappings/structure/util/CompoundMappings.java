@@ -9,12 +9,19 @@ public class CompoundMappings extends MappingsHolder {
     public CompoundMappings(MappingsHolder classes, MappingsHolder methods, MappingsHolder fields) {
         classes.classesByMap.forEach((k, v) -> {
             MappingsClass cls = new MappingsClass(v.getObsfucationName(), v.getMappedName());
-            for (MappingsMethod method : methods.getFromObsf(cls.getObsfucationName()).getMethods()) {
-                cls.getMethods().add(method);
-            }
-            for (MappingsField field : methods.getFromObsf(cls.getObsfucationName()).getFields()) {
-                cls.getFields().add(field);
-            }
+            if (methods.classesByObf.containsKey(cls.getObsfucationName())) {
+                for (MappingsMethod method : methods.getFromObsf(cls.getObsfucationName()).getMethods()) {
+                    cls.getMethods().add(method);
+                }
+            } else
+                for (MappingsMethod field : v.getMethods()) cls.addMethod(field);
+
+            if (fields.classesByObf.containsKey(cls.getObsfucationName())) {
+                for (MappingsField field : fields.getFromObsf(cls.getObsfucationName()).getFields()) {
+                    cls.getFields().add(field);
+                }
+            } else
+                for (MappingsField field : v.getFields()) cls.addField(field);
 
             this.classesByMap.put(cls.getMappedName(), cls);
         });
